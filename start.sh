@@ -6,9 +6,10 @@ git_repo=https://github.com/DogLoc/unknown-sender.git
 
 # dependencies
 
-dependencies[0]=git:apt
-dependencies[1]=python3:apt
-dependencies[2]=lolcat:gem
+# package_name:packaging:packaging_termux
+dependencies[0]=git:apt:pkg
+dependencies[1]=python3:apt:pkg
+dependencies[2]=lolcat:gem:gem
 
 # functions
 
@@ -20,7 +21,12 @@ check_dependency(){
         echo  "✅ ${dependency[0]}"
     else
         echo  "❌ ${dependency[0]}"
-        sudo ${dependency[1]} install ${dependency[0]}
+        if [ $(ps -ef|grep -c com.termux ) -gt 0 ]; then 
+            ${dependency[3]} install ${dependency[0]}
+        else
+            sudo ${dependency[1]} install ${dependency[0]}
+        fi
+        
     fi
 }
 

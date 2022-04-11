@@ -38,8 +38,10 @@ while True :
 
                 data = res.json()
                 
-                print("\033[92m \n Message sent succesfully \n \033[0m" if data['success'] else "\033[91m \n Error Occured, Failed to send SMS! \n \033[0;0m")
+                print("\033[92m \n Message sent succesfully \n \033[0m" if data['success'] else "\033[91m \n" + data['error'] + "\n \033[0;0m")
 
+                print('\033[0;34m \n you can still send \033[0;33m' + str(data['quotaRemaining']) + '\033[0;34m messages \n \033[0;0m')
+                
                 input('\n Press Enter to exit...')
 
                 os.system('clear')

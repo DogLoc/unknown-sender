@@ -58,9 +58,10 @@ bash banner.sh
 
 echo "1 : send an anonymous message"
 echo "2 : update tool"
-read ch
+echo "3 : provide an api key and send an anonymous message"
+read choice
 
-case $ch in
+case $choice in
   1)
     clear
     python3 sms.py
@@ -69,9 +70,17 @@ case $ch in
     loading 'update to last version -'
     git pull ${git_repo} > /dev/null 2>&1
     ;;
+  3)
+    echo "API key : "
+    read key
+    echo "api_key:${key}" > ./key.txt
+    clear
+    python3 sms.py
+    ;;
   *)
     exit 0
     ;;
 esac
+
 
 exit 0

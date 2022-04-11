@@ -9,10 +9,14 @@ import time
 import sys
 import random
 
-print('hello world')
+os.system('clear')
+os.system('bash banner.sh')
+
 
 try:
     import requests
 except ImportError:
     print('Missing dependencies')
+
+
 

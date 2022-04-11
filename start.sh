@@ -46,29 +46,6 @@ loading() {
     echo " "
 }
 
-banner() {
-   
-   clear
-   echo -e  "     
-        ██╗   ██╗███╗   ██╗██╗  ██╗███╗   ██╗ ██████╗ ██╗    ██╗███╗   ██╗
-        ██║   ██║████╗  ██║██║ ██╔╝████╗  ██║██╔═══██╗██║    ██║████╗  ██║
-        ██║   ██║██╔██╗ ██║█████╔╝ ██╔██╗ ██║██║   ██║██║ █╗ ██║██╔██╗ ██║
-        ██║   ██║██║╚██╗██║██╔═██╗ ██║╚██╗██║██║   ██║██║███╗██║██║╚██╗██║
-        ╚██████╔╝██║ ╚████║██║  ██╗██║ ╚████║╚██████╔╝╚███╔███╔╝██║ ╚████║
-        ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
-                                                                        
-        ███████╗███████╗███╗   ██╗██████╗ ███████╗██████╗                 
-        ██╔════╝██╔════╝████╗  ██║██╔══██╗██╔════╝██╔══██╗                
-        ███████╗█████╗  ██╔██╗ ██║██║  ██║█████╗  ██████╔╝                
-        ╚════██║██╔══╝  ██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗                
-        ███████║███████╗██║ ╚████║██████╔╝███████╗██║  ██║                
-        ╚══════╝╚══════╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
-
-        by : https://github.com/DogLoc
-    " | lolcat
-   echo " "
-}
-
 # script start
 
 loading 'dependencies check -'
@@ -77,20 +54,24 @@ for i in "${dependencies[@]}"; do
     check_dependency $i
 done
 
-banner
+bash banner.sh
 
-if test -e update.txt ; then
-    loading 'get update -'
-    git pull ${git_repo}
-else
-    touch update.txt
-    echo "Overwriting the existing text in the file" > update.txt
-fi
+echo "1 : send an anonymous message"
+echo "2 : update tool"
+read ch
 
-echo " "
-read -n 1 -s -r -p "Press enter to continue"
-clear
+case $ch in
+  1)
+    clear
+    python3 sms.py
+    ;;
+  2)
+    git pull origin main ${git_repo}
+    ;;
 
-python3 sms.py
+  *)
+    exit 0
+    ;;
+esac
 
 exit 0

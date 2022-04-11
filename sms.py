@@ -1,18 +1,14 @@
 #!/usr/bin/env python
-import threading
-import string
-import base64
-import urllib.request
-import urllib.parse
 import os
-import time
-import sys
-import random
-
 import phonenumbers
 
 os.system('clear')
 os.system('bash banner.sh')
+
+
+with open('key.txt') as f:
+    lines = f.readlines()
+    api_key = lines[0].split(':')[1]
 
 try:
     import requests
@@ -23,22 +19,45 @@ print("\033[94m Enter the information ask to send a message. \033[0;0m")
 
 while True : 
     
-    target = input('\n \033[91m enter the target phone number (+33600000000) :\033[0;0m')
+    target = input('\n Enter the target phone number (+33600000000) : ')
 
     if target.startswith('+'):
         target_without_country_code = target.split('+', 1)[1]
 
         if len(target) > 7 and target_without_country_code.isdigit():
+
             if phonenumbers.is_valid_number(phonenumbers.parse(target)):
-                message = input('\n enter the a message to send :')
+
+                message = input('\n enter the a message to send : ')
+
+                res = requests.post('https://textbelt.com/text',{
+                    'phone': target,
+                    'message': message ,
+                    'key': api_key
+                })
+
+                data = res.json()
+                
+                print("\033[92m \n Message sent succesfully \n \033[0m" if data['success'] else "\033[91m \n Error Occured, Failed to send SMS! \n \033[0;0m")
+
+                input('\n Press Enter to exit...')
+
+                os.system('clear')
+                exit()
+
+
             else:
                 print('\n \033[91m The provided phone number is invalid \033[0;0m')
                 continue
+
         else:
             print('\n \033[91m The provided phone number is invalid \033[0;0m')
             continue
+
     else:
         print('\n \033[91m an indicative must be provided like +33 \033[0;0m')
         continue
 
     break
+
+exit()

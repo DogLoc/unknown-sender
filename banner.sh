@@ -17,3 +17,8 @@ echo -e  "
         by : https://github.com/DogLoc
 " | lolcat
 echo " "
+
+echo -e "\033[0;33m Only for educational purposes.\e[0m"
+echo -e "\033[0;33m I'm not responsible for the miss use of the script. \e[0m"
+
+echo " "

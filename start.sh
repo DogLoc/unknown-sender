@@ -66,9 +66,9 @@ case $ch in
     python3 sms.py
     ;;
   2)
-    git pull origin main ${git_repo}
+    loading 'update to last version -'
+    git pull ${git_repo} > /dev/null 2>&1
     ;;
-
   *)
     exit 0
     ;;
